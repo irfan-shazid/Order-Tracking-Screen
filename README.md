@@ -1,22 +1,35 @@
 # Order Tracking
 
 A mobile order tracking screen for an e-commerce app, rebuilt around one goal: a customer should be able to glance
-at the screen and immediately understand where their package is, when it's arriving, and what to do if something's
-wrong — including when things go wrong.
+at the screen and immediately understand where their package is, when it's arriving, and what to do next — including
+when something has gone wrong.
 
 **Live demo:** https://order-tracking-livid-nu.vercel.app
 
-The demo bar (top of the screen) switches between nine scenarios, each backed by its own mock order. Every scenario
-also has its own URL, e.g. `?scenario=delayed`, so any state can be linked to directly.
+The demo bar at the top of the screen switches between nine scenarios, each backed by its own mock order. Every
+scenario also has its own URL, e.g. `?scenario=delayed`, so any state can be linked to directly.
 
-| Required scenario | URL |
-| --- | --- |
-| Delayed order | `?scenario=delayed` |
-| Delivered but not received | `?scenario=not-received` |
+| Required scenario          | URL                          |
+| -------------------------- | ---------------------------- |
+| Delayed order              | `?scenario=delayed`          |
+| Delivered but not received | `?scenario=not-received`     |
 | Tracking not available yet | `?scenario=tracking-pending` |
 
 Standard journey (`in-transit`, `out-for-delivery`, `delivered`) and system states (`slow-network`, `load-error`,
 `not-found`) are also wired up — see [`src/lib/scenarios.ts`](src/lib/scenarios.ts) for the full list.
+
+## Contents
+
+- [Why it's built this way](#why-its-built-this-way)
+- [Stack](#stack)
+- [Getting started](#getting-started)
+- [Mock data and API](#mock-data-and-api)
+- [Project structure](#project-structure)
+- [Design and interaction notes](#design-and-interaction-notes)
+- [Accessibility](#accessibility)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Known limitations](#known-limitations)
 
 ## Why it's built this way
 
@@ -44,24 +57,26 @@ Order (stage, estimatedDelivery, delay?, delivery?, supportCase?)
 - **React 19 + TypeScript**, built with **Vite**
 - **Tailwind CSS v4** for styling, **lucide-react** for icons
 - **Vitest** + **React Testing Library** for tests
-- No backend — see [Mock data](#mock-data-and-api) below
+- No backend — see [Mock data and API](#mock-data-and-api)
 
 ## Getting started
 
+Requires Node 20+.
+
 ```bash
 npm install
-npm run dev       # start the dev server (http://localhost:5173)
+npm run dev        # start the dev server (http://localhost:5173)
 ```
 
 Other scripts:
 
 ```bash
-npm run build         # type-check and build for production
+npm run build         # type-check, then build for production
 npm run preview       # serve the production build locally
-npm test               # run the test suite once
-npm run test:watch     # run tests in watch mode
-npm run lint            # oxlint
-npm run format          # prettier --write
+npm test              # run the test suite once
+npm run test:watch    # run tests in watch mode
+npm run lint           # oxlint
+npm run format          # prettier --write .
 ```
 
 ## Mock data and API
@@ -80,27 +95,27 @@ drifts into the past.
 
 ```
 src/
-├── types/order.ts              Domain types (Order, TrackingEvent, SupportCase, …)
+├── types/order.ts          Domain types (Order, TrackingEvent, SupportCase, …)
 ├── data/
-│   ├── seedOrders.ts           Mock orders, one per delivery situation
-│   └── mockApi.ts              Fake network layer: fetch, mutate, simulate failure
+│   ├── seedOrders.ts       Mock orders, one per delivery situation
+│   └── mockApi.ts          Fake network layer: fetch, mutate, simulate failure
 ├── lib/
-│   ├── tracking.ts             Order → situation, tone, headline, progress steps
-│   ├── format.ts                Date/money/relative-time formatting
-│   ├── scenarios.ts             The demo's scenario catalogue
-│   └── ui.ts                    Tone → Tailwind class maps, clipboard helper
+│   ├── tracking.ts         Order → situation, tone, headline, progress steps
+│   ├── format.ts           Date/money/relative-time formatting
+│   ├── scenarios.ts        The demo's scenario catalogue
+│   └── ui.ts               Tone → Tailwind class maps, clipboard helper
 ├── hooks/
-│   ├── useOrderTracking.ts     Loads an order, exposes actions (retry, search, confirm, report…)
-│   ├── useScenarioParam.ts     Keeps the active scenario in the URL
-│   └── useNow.ts                 Ticking clock so relative labels stay correct
+│   ├── useOrderTracking.ts Loads an order, exposes actions (retry, search, confirm, report…)
+│   ├── useScenarioParam.ts Keeps the active scenario in the URL
+│   └── useNow.ts           Ticking clock so relative labels stay correct
 ├── components/
-│   ├── tracking/                 Status hero, progress stepper, history, order summary, help
-│   │   └── situations/           One card per situation (delayed, not-received, investigating…)
-│   ├── sheets/                   Order details, delivery photo, contact support + chat, report flow
-│   ├── states/                   Loading skeleton, error, not-found
-│   ├── ui/                       Button, Card, Sheet, Switch, Toast — small, unopinionated primitives
-│   └── demo/                     The scenario picker (not part of the product screen itself)
-└── App.tsx                      Wires the demo shell around <TrackingScreen>
+│   ├── tracking/           Status hero, progress stepper, history, order summary, help
+│   │   └── situations/     One card per situation (delayed, not-received, investigating…)
+│   ├── sheets/             Order details, delivery photo, contact support + chat, report flow
+│   ├── states/             Loading skeleton, error, not-found
+│   ├── ui/                 Button, Card, Sheet, Switch, Toast — small, unopinionated primitives
+│   └── demo/               The scenario picker (not part of the product screen itself)
+└── App.tsx                 Wires the demo shell around <TrackingScreen>
 ```
 
 `components/demo/` is the only folder that exists purely for this prototype; everything else is the product UI.
@@ -109,7 +124,7 @@ src/
 
 - **Status hero** — a single card at the top always shows the plain-language situation (never "Stage: shipped"), a
   4-step progress tracker, and the one date that matters right now (ETA, delivery time, or "next update by").
-- **Delayed order** — explains *why* it's late using the carrier's own message, shows the new estimate with the
+- **Delayed order** — explains _why_ it's late using the carrier's own message, shows the new estimate with the
   original struck through, and turns on a refund/replacement CTA once the delay-guarantee window has passed.
 - **Delivered but not received** — asks the customer to confirm receipt first; saying "no" surfaces an optional
   checklist (look around, ask a neighbor, check the photo) before offering to file a report, with a visible
@@ -156,11 +171,31 @@ npm test
 
 The app was also driven end-to-end in a real browser (Edge, via Playwright) against the production build across all
 nine scenarios at 360px and 390px widths, and through the desktop phone-frame layout, checking for console errors,
-horizontal overflow, and the full flow interactions described above.
+horizontal overflow, and the full set of interactions above.
+
+## Deployment
+
+Deployed on [Vercel](https://vercel.com) as a static Vite build. [`vercel.json`](vercel.json) makes that
+explicit rather than relying on auto-detection:
+
+- `framework: "vite"`, `buildCommand`/`outputDirectory` — pinned rather than inferred.
+- A catch-all `rewrites` entry falls back to `index.html`, so the app never 404s if a route is opened directly.
+- Fingerprinted files under `/assets` are served with a one-year immutable cache; `index.html` is always
+  revalidated, so a new deploy is picked up immediately without needing a cache bust.
+
+To deploy your own copy:
+
+```bash
+npm i -g vercel
+vercel --prod
+```
+
+Any static host that serves `dist/` with an SPA fallback to `index.html` (Netlify, Cloudflare Pages, GitHub Pages
+with a fallback, …) works equally well — the app has no server-side requirements.
 
 ## Known limitations
 
-- There is no backend, by design — see [Mock data](#mock-data-and-api).
+- There is no backend, by design — see [Mock data and API](#mock-data-and-api).
 - Delivery-photo, product, and house illustrations are inline SVGs rather than real photography, since no image
   assets were provided.
 - State lives in memory only; a refresh resets it to the seed data (the mock API is a stand-in for a real service,

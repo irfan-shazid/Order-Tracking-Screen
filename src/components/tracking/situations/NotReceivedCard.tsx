@@ -50,7 +50,7 @@ export function NotReceivedCard({ order, now, pending, onReport, onFound, onView
                 onChange={() => setChecked((c) => c.map((v, i) => (i === index ? !v : v)))}
                 className="mt-0.5 size-[18px] shrink-0 cursor-pointer rounded accent-brand-600"
               />
-              <span className={cn('text-sm', checked[index] ? 'text-slate-400 line-through' : 'text-slate-700')}>
+              <span className={cn('text-sm', checked[index] ? 'text-slate-500 line-through' : 'text-slate-700')}>
                 {label}
               </span>
             </label>

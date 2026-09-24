@@ -58,7 +58,7 @@ export function ProgressStepper({ steps, label }: { steps: ProgressStep[]; label
                 className={cn(
                   'mt-2 text-[11px] leading-tight font-semibold',
                   step.state === 'upcoming'
-                    ? 'text-slate-400'
+                    ? 'text-slate-500'
                     : step.state === 'current'
                       ? tone.text
                       : 'text-slate-800',

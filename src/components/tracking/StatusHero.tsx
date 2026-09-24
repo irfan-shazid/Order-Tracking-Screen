@@ -95,6 +95,30 @@ export function StatusHero({ summary, lastSyncedAt, now, refreshing, onRefresh, 
       <div className="border-t border-slate-100 px-2 pt-5 pb-4">
         <ProgressStepper steps={summary.steps} label={summary.progressLabel} />
       </div>
+
+      {summary.latestEvent && (
+        <div className="flex items-start gap-3 border-t border-slate-100 bg-slate-50/70 px-4 py-3">
+          <span
+            aria-hidden
+            className={cn(
+              'mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-white ring-1 ring-slate-200',
+              summary.latestEvent.exception ? 'text-amber-600' : tone.icon,
+            )}
+          >
+            <MapPin className="size-3.5" strokeWidth={2.5} />
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[13px] font-semibold text-slate-800">
+              <span className="sr-only">Latest update: </span>
+              {summary.latestEvent.title}
+            </p>
+            <p className="text-xs text-slate-500">
+              {summary.latestEvent.location && <>{summary.latestEvent.location} · </>}
+              <time dateTime={summary.latestEvent.timestamp}>{formatRelative(summary.latestEvent.timestamp, now)}</time>
+            </p>
+          </div>
+        </div>
+      )}
     </Card>
   )
 }

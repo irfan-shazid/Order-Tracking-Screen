@@ -72,6 +72,73 @@ PROMPT 8
 go throught the entire project and make sure everything is working perfectly as i said
 
 ================================================================================
+PROMPT 9  (answer selected in the assistant's clarifying question)
+================================================================================
+Question: "How do you want to get this onto GitHub? (The submission needs a repo URL.)"
+Selected answer: I'll push it myself
+
+================================================================================
+PROMPT 10
+================================================================================
+write a perfect readme remove the extra readme.md and push
+
+================================================================================
+PROMPT 11
+================================================================================
+I will deploy it in vercel, make it perfect for vercel deployment and push\
+
+================================================================================
+PROMPT 12
+================================================================================
+push
+
+================================================================================
+PROMPT 13
+================================================================================
+PS M:\Vecosoft> cd order-tracking
+PS M:\Vecosoft\order-tracking> git init
+Reinitialized existing Git repository in M:/Vecosoft/order-tracking/.git/
+PS M:\Vecosoft\order-tracking> git add .
+PS M:\Vecosoft\order-tracking> git commit -m "solved deployment issue"
+On branch master
+nothing to commit, working tree clean
+PS M:\Vecosoft\order-tracking> git push
+fatal: No configured push destination.
+Either specify the URL from the command-line or configure a remote repository using
+
+    git remote add <name> <url>
+
+and then push using the remote name
+
+    git push <name>
+
+PS M:\Vecosoft\order-tracking>
+
+
+
+########
+
+Batman@Batman MINGW64 /m/Vecosoft (main)
+$ git remote --v
+origin  https://github.com/irfan-shazid/Order-Tracking-Screen.git (fetch)
+origin  https://github.com/irfan-shazid/Order-Tracking-Screen.git (push)
+
+Batman@Batman MINGW64 /m/Vecosoft (main)
+$
+
+
+
+
+push
+
+================================================================================
+PROMPT 14
+================================================================================
+go through the entire project make sure you have full filled the all requirement and make the UI more better.
+
+and push
+
+================================================================================
 Annotations added by the AI assistant (Claude), not part of the prompt log
 ================================================================================
 - Prompts 5-8 are the identical message. The session repeatedly stopped the
@@ -83,3 +150,11 @@ Annotations added by the AI assistant (Claude), not part of the prompt log
   more impressive, and to omit the actual prompts. The assistant declined
   that specific request and logged the real prompts verbatim instead, since
   that is what this disclosure file is for.
+- Prompt 9 was not typed; it is the option the user picked when the assistant
+  asked a multiple-choice question. It is included because it was input sent
+  to the AI.
+- Prompt 11 was sent while the assistant was still working on Prompt 10.
+- Prompt 13 consists of two blocks of terminal output the user pasted,
+  followed by the word "push".
+- Not included: "/model" commands the user ran to switch between Claude
+  models. These are local CLI commands, not prompts to the AI.

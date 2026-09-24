@@ -1,9 +1,11 @@
-import { Copy, Hash, MapPin, MessageSquareText, Truck, type LucideIcon } from 'lucide-react'
-import type { ReactNode } from 'react'
+import { Check, Copy, Hash, MapPin, MessageSquareText, Truck, type LucideIcon } from 'lucide-react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { groupTrackingNumber } from '../../lib/format'
+import { cn } from '../../lib/ui'
 import type { Order } from '../../types/order'
-import { Button } from '../ui/Button'
 import { Card, CardHeader } from '../ui/Card'
+
+const COPIED_MS = 2000
 
 function Row({
   icon: Icon,
@@ -33,9 +35,21 @@ export function DeliveryDetailsCard({
   onCopyTracking,
 }: {
   order: Order
-  onCopyTracking: (value: string) => void
+  onCopyTracking: (value: string) => Promise<boolean>
 }) {
   const { shipment, address } = order
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const timer = setTimeout(() => setCopied(false), COPIED_MS)
+    return () => clearTimeout(timer)
+  }, [copied])
+
+  async function handleCopy(value: string) {
+    if (await onCopyTracking(value)) setCopied(true)
+  }
+
   return (
     <Card aria-labelledby="delivery-details-title">
       <CardHeader id="delivery-details-title" title="Delivery details" />
@@ -48,15 +62,22 @@ export function DeliveryDetailsCard({
           label="Tracking number"
           action={
             shipment && (
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => onCopyTracking(shipment.trackingNumber)}
-                icon={<Copy className="size-4" aria-hidden />}
-                aria-label="Copy tracking number"
+              <button
+                type="button"
+                aria-label={copied ? 'Tracking number copied' : 'Copy tracking number'}
+                title={copied ? 'Copied' : 'Copy'}
+                onClick={() => handleCopy(shipment.trackingNumber)}
+                className={cn(
+                  'inline-flex size-9 items-center justify-center rounded-full transition-colors',
+                  copied ? 'bg-emerald-50 text-emerald-600' : 'text-brand-700 hover:bg-brand-50 active:bg-brand-100',
+                )}
               >
-                Copy
-              </Button>
+                {copied ? (
+                  <Check className="size-4" strokeWidth={2.5} aria-hidden />
+                ) : (
+                  <Copy className="size-4" aria-hidden />
+                )}
+              </button>
             )
           }
         >

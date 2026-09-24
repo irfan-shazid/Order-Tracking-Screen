@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNow } from '../../hooks/useNow'
 import { useOrderTracking } from '../../hooks/useOrderTracking'
 import { useToast } from '../../hooks/useToast'
@@ -53,6 +53,10 @@ export function TrackingScreen({ scenario }: { scenario: Scenario }) {
 
   const order = state.status === 'ready' ? state.order : null
   const summary = useMemo(() => (order ? summarizeTracking(order, now) : null), [order, now])
+
+  useEffect(() => {
+    document.title = order && summary ? `${summary.headline} · Order #${order.number}` : 'Track your order'
+  }, [order, summary])
 
   const focusStatus = () => requestAnimationFrame(() => headingRef.current?.focus())
 
@@ -112,6 +116,7 @@ export function TrackingScreen({ scenario }: { scenario: Scenario }) {
   async function handleCopy(value: string, label = 'Tracking number') {
     const ok = await copyToClipboard(value)
     toast(ok ? `${label} copied` : `Couldn't copy. ${label}: ${value}`, ok ? 'success' : 'error')
+    return ok
   }
 
   function renderSituationCard(order: Order, summary: TrackingSummary) {
@@ -182,7 +187,7 @@ export function TrackingScreen({ scenario }: { scenario: Scenario }) {
         {state.status === 'not_found' && <NotFoundState query={state.query} onSearch={tracking.search} />}
 
         {order && summary && (
-          <>
+          <div className="animate-fade-in space-y-3">
             <StatusHero
               summary={summary}
               lastSyncedAt={order.lastSyncedAt}
@@ -201,7 +206,7 @@ export function TrackingScreen({ scenario }: { scenario: Scenario }) {
               onContact={() => openSupport()}
               onReport={() => openReport()}
             />
-          </>
+          </div>
         )}
       </main>
 

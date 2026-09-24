@@ -23,6 +23,19 @@ describe('Order tracking screen', () => {
     expect(screen.getByText('Aura ANC Wireless Headphones')).toBeInTheDocument()
   })
 
+  it('surfaces the latest scan in the header, titles the tab and copies the tracking number', async () => {
+    const user = renderScenario('in-transit')
+    const headline = await findHeadline(/^Arriving/)
+    const hero = headline.closest('section')!
+    expect(within(hero).getByText(/Latest update:/).parentElement).toHaveTextContent('Arrived at carrier facility')
+    expect(within(hero).getByText(/Denver, CO/)).toBeInTheDocument()
+    expect(document.title).toBe(`${headline.textContent} · Order #VS-20418`)
+
+    await user.click(screen.getByRole('button', { name: 'Copy tracking number' }))
+    expect(await screen.findByRole('button', { name: 'Tracking number copied' })).toBeInTheDocument()
+    expect(await navigator.clipboard.readText()).toBe('1Z84A2E90312345678')
+  })
+
   it('delayed: explains why, shows the new date and offers next steps', async () => {
     const user = renderScenario('delayed')
     expect(await findHeadline('Now arriving tomorrow')).toBeInTheDocument()

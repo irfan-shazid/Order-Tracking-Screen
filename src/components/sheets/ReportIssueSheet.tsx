@@ -353,7 +353,7 @@ function ReportFlow({ onClose, order, now, preset, onSubmit }: Omit<ReportIssueS
                 {detailsError}
               </p>
             ) : (
-              <p id={`${detailsId}-hint`} className="mt-1.5 text-right text-xs text-slate-400">
+              <p id={`${detailsId}-hint`} className="mt-1.5 text-right text-xs text-slate-500">
                 {details.length}/500
               </p>
             )}

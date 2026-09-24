@@ -123,7 +123,11 @@ src/
 ## Design and interaction notes
 
 - **Status hero** — a single card at the top always shows the plain-language situation (never "Stage: shipped"), a
-  4-step progress tracker, and the one date that matters right now (ETA, delivery time, or "next update by").
+  4-step progress tracker, the one date that matters right now (ETA, delivery time, or "next update by"), and the
+  latest carrier scan with its location, so "where is it?" is answered without scrolling. The browser tab title
+  mirrors the headline (e.g. "Now arriving tomorrow · Order #VS-19102").
+- **Delivery details** — carrier, tracking number (one-tap copy with inline confirmation), address and delivery
+  instructions.
 - **Delayed order** — explains _why_ it's late using the carrier's own message, shows the new estimate with the
   original struck through, and turns on a refund/replacement CTA once the delay-guarantee window has passed.
 - **Delivered but not received** — asks the customer to confirm receipt first; saying "no" surfaces an optional
@@ -150,6 +154,8 @@ src/
 - Dialogs follow the WAI-ARIA pattern: `role="dialog"`, `aria-modal`, labelled by their heading, a focus trap, and
   restored focus on close.
 - Color is never the only signal — delayed/warning states also change the icon, label text, and copy.
+- Body and label text meets WCAG AA contrast (4.5:1); lighter greys are reserved for decorative icons and
+  placeholders.
 
 ## Testing
 
@@ -157,7 +163,7 @@ src/
 npm test
 ```
 
-41 tests across four files:
+42 tests across four files:
 
 - `lib/format.test.ts` — date/time/money formatting, including the "today / tomorrow / weekday / date" and
   same-day-window logic.

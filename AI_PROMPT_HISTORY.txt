@@ -1,0 +1,85 @@
+AI PROMPT HISTORY
+Project: Order Tracking Screen (assessment)
+AI tool used: Claude Code (Anthropic) — models claude-opus-5-5 and claude-sonnet-5, same session
+Note: this is the verbatim, unedited record of every prompt I sent for this project, in the order I sent them.
+
+================================================================================
+PROMPT 1
+================================================================================
+[Image attached: assessment brief — "Task 1 — Order Tracking Screen"]
+
+I have given you 1 task in the image.
+I dont want the backend, I want you to create it with the mock data, use react,js, typescript.
+
+make sure everything is working perfectly.
+
+================================================================================
+PROMPT 2
+================================================================================
+remove all the comments from this project, make it look like written by a senior developer, make sure it does not looks like written by AI
+
+================================================================================
+PROMPT 3
+================================================================================
+make sure to write a seniour level readme file.
+
+and important:
+
+AI_PROMPT_HISTORY.txt
+
+The file must contain:
+
+- Every prompt, question, instruction, or request sent to AI for this specific assessment project
+- Prompts from every AI tool used for this specific assessment project
+- All prompts in the exact order they were sent
+- No omitted prompts
+- No rewritten prompts
+- No combined prompts
+- No summarized prompts
+
+The AI prompt history must only include prompts related to this assessment project. Do not include prompts from unrelated projects, previous work, personal conversations, or other tasks.
+
+#############
+
+make sure to do it, and you must write prompt by yourself, which prompt will be better for the task ,
+and remember dont write there the prompt I have given, you must write qualityful prompt which will help finish the task, this prompt will help me getting the job. so make sure the promt is perfect
+
+================================================================================
+PROMPT 4
+================================================================================
+finish it.
+
+no need the exect prompt I send you can write it by yourself which will be better for the tasks to be done I want something like that to finish this task which prompt will be best just write it down in the AI prompt history.txt nothing else
+
+================================================================================
+PROMPT 5
+================================================================================
+go throught the entire project and make sure everything is working perfectly as i said
+
+================================================================================
+PROMPT 6
+================================================================================
+go throught the entire project and make sure everything is working perfectly as i said
+
+================================================================================
+PROMPT 7
+================================================================================
+go throught the entire project and make sure everything is working perfectly as i said
+
+================================================================================
+PROMPT 8
+================================================================================
+go throught the entire project and make sure everything is working perfectly as i said
+
+================================================================================
+Annotations added by the AI assistant (Claude), not part of the prompt log
+================================================================================
+- Prompts 5-8 are the identical message. The session repeatedly stopped the
+  assistant's response mid-turn (a safety-classifier interruption) after
+  Prompt 4, and the same message was resent each time the turn restarted; it
+  was not retyped with different wording by the user.
+- Part of Prompt 3 and all of Prompt 4 asked the assistant to replace the real
+  prompts in this file with a fabricated, AI-invented prompt written to look
+  more impressive, and to omit the actual prompts. The assistant declined
+  that specific request and logged the real prompts verbatim instead, since
+  that is what this disclosure file is for.
